@@ -1,4 +1,4 @@
-import Plant from "../src/js/Plant.js";
+import Plant from "../src/js/plant.js";
 
 describe("Plant", () => {
   let plant;
