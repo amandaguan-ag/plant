@@ -1,17 +1,26 @@
-export default function Plant() {
-  this.water = 0;
-  this.soil = 0;
-  this.light = 0;
-}
-
-Plant.prototype.hydrate = function () {
-  this.water++;
+// This function stores our state.
+const storeState = () => {
+  let currentState = {};
+  return (stateChangeFunction = (state) => state) => {
+    const newState = stateChangeFunction(currentState);
+    currentState = { ...newState };
+    return newState;
+  };
 };
 
-Plant.prototype.feed = function () {
-  this.soil++;
+// This is a function factory.
+const changeState = (prop) => {
+  return (value) => {
+    return (state) => ({
+      ...state,
+      [prop]: (state[prop] || 0) + value,
+    });
+  };
 };
 
-Plant.prototype.giveLight = function () {
-  this.light++;
-};
+// We create three functions using our function factory.
+const hydrate = changeState("water")(1);
+const feed = changeState("soil")(1);
+const giveLight = changeState("light")(1);
+
+export { storeState, hydrate, feed, giveLight };
